@@ -1,0 +1,92 @@
+.stat-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.stat-card--primary::before { background: linear-gradient(90deg, #4f46e5, #818cf8); }
+.stat-card--success::before { background: linear-gradient(90deg, #10b981, #34d399); }
+.stat-card--warning::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.stat-card--danger::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+.stat-card--info::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.stat-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.stat-card__icon--primary { background: var(--color-primary-50); }
+.stat-card__icon--success { background: var(--color-success-bg); }
+.stat-card__icon--warning { background: var(--color-warning-bg); }
+.stat-card__icon--danger { background: var(--color-danger-bg); }
+.stat-card__icon--info { background: var(--color-info-bg); }
+
+.stat-card__trend {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.stat-card__trend.up {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.stat-card__trend.down {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.stat-card__value {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.stat-card__title {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-xs);
+  font-weight: 500;
+}
+
+.stat-card__subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}

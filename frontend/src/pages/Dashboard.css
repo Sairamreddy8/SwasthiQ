@@ -1,0 +1,93 @@
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-lg);
+}
+
+.dashboard-side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.table-badge {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.td-medicine {
+  font-weight: 500;
+}
+
+.td-amount {
+  font-weight: 600;
+  color: var(--color-success);
+}
+
+.td-time {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* Low stock list */
+.low-stock-list,
+.orders-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.low-stock-item,
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.low-stock-item:last-child,
+.order-item:last-child {
+  border-bottom: none;
+}
+
+.low-stock-name,
+.order-medicine {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.low-stock-category,
+.order-supplier {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.low-stock-qty {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-warning);
+  background: var(--color-warning-bg);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.empty-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-md);
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
