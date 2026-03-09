@@ -1,7 +1,10 @@
-const BASE_URL = 'http://localhost:8000/api';
+// Use the environment variable for production (e.g., in Vercel)
+const BASE_URL = import.meta.env.VITE_SwasthiQ_backend || 'http://localhost:8000';
 
 async function request(endpoint, options = {}) {
-  const url = `${BASE_URL}${endpoint}`;
+  // Ensure the endpoint starts with /api if it doesn't already
+  const apiEndpoint = endpoint.startsWith('/api') ? endpoint : `/api${endpoint}`;
+  const url = `${BASE_URL}${apiEndpoint}`;
   const config = {
     headers: { 'Content-Type': 'application/json' },
     ...options,
