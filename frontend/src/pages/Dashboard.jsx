@@ -103,7 +103,7 @@ export default function Dashboard() {
         <div className="tabs">
           <button className={`tab-btn ${activeTab === 'sales' ? 'active' : ''}`} onClick={() => setActiveTab('sales')}>🛒 Sales</button>
           <button className={`tab-btn ${activeTab === 'purchase' ? 'active' : ''}`} onClick={() => setActiveTab('purchase')}>📦 Purchase</button>
-          <button className={`tab-btn ${activeTab === 'inventory' ? 'active' : ''}`} onClick={() => setActiveTab('inventory')}>📋 Inventory</button>
+           {/* <button className={`tab-btn ${activeTab === 'inventory' ? 'active' : ''}`} onClick={() => setActiveTab('inventory')}>📋 Inventory</button>  */}
         </div>
         <div className="nav-actions">
           <button className="btn btn-primary" onClick={handleNewSale}>+ New Sale</button>
