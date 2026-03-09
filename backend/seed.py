@@ -10,9 +10,17 @@ from models import Medicine, Sale, PurchaseOrder, MedicineStatus, PurchaseOrderS
 
 
 def seed():
-    Base.metadata.drop_all(bind=engine)
+    # Only create tables if they don't exist, don't drop them!
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
+
+    # Check if we already have data
+    if db.query(Medicine).first():
+        print("🌱 Database already has data. Skipping seed.")
+        db.close()
+        return
+
+    print("🌱 Seeding database with initial data...")
 
     # ── Medicines ───────────────────────────────────────────
     medicines_data = [
