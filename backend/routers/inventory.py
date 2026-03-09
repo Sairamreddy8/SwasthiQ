@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from datetime import date
+from datetime import date, timedelta
 from database import get_db
 from models import Medicine, MedicineStatus
 from schemas import (
@@ -116,8 +116,18 @@ def update_medicine_status(medicine_id: int, status_update: StatusUpdate, db: Se
         raise HTTPException(status_code=404, detail="Medicine not found")
 
     medicine.status = status_update.status
+    
     if status_update.status == MedicineStatus.OUT_OF_STOCK.value:
         medicine.quantity = 0
+    elif status_update.status == MedicineStatus.EXPIRED.value:
+        # Set expiry to yesterday to make it persistent
+        medicine.expiry_date = (date.today() - timedelta(days=1))
+    elif status_update.status == MedicineStatus.ACTIVE.value:
+        # Ensure it has quantity and valid expiry if marked active manually
+        if medicine.quantity == 0:
+            medicine.quantity = 100
+        if medicine.expiry_date < date.today():
+             medicine.expiry_date = (date.today() + timedelta(days=365))
 
     db.commit()
     db.refresh(medicine)

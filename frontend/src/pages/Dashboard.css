@@ -1,93 +1,130 @@
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: var(--space-lg);
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
 }
 
-.dashboard-side-panel {
+.header-right {
+  display: flex;
+  gap: 12px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.dashboard-tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.dashboard-content {
+  padding: 0;
+  overflow: hidden;
+}
+
+.tab-pane {
+  background: #f0fdfa; /* Light emerald for "Make a Sale" */
+  padding: 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.section-header h3 { color: #1e293b; margin-bottom: 4px; }
+.section-header p { margin-bottom: 16px; }
+
+.mock-sale-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.recent-sales-wrapper {
+  padding: 24px;
+}
+
+.recent-sales-wrapper h3 {
+  margin-bottom: 20px;
+  color: #475569;
+}
+
+.sales-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: 12px;
 }
 
-.table-badge {
-  font-size: var(--font-size-xs);
-  font-weight: 500;
-  color: var(--color-text-muted);
-  background: var(--color-bg);
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-}
-
-.td-medicine {
-  font-weight: 500;
-}
-
-.td-amount {
-  font-weight: 600;
-  color: var(--color-success);
-}
-
-.td-time {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-}
-
-/* Low stock list */
-.low-stock-list,
-.orders-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.low-stock-item,
-.order-item {
+.sale-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: var(--space-sm) 0;
-  border-bottom: 1px solid var(--color-border-light);
+  padding: 16px;
+  background: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  transition: background 0.2s;
 }
 
-.low-stock-item:last-child,
-.order-item:last-child {
-  border-bottom: none;
+.sale-row:hover { background: #f8fafc; }
+
+.sale-icon {
+  width: 40px;
+  height: 40px;
+  background: #dcfce7;
+  color: #10b981;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-right: 16px;
 }
 
-.low-stock-name,
-.order-medicine {
-  display: block;
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  color: var(--color-text);
+.sale-info { flex: 1; }
+.sale-id { font-weight: 600; color: #334155; font-size: 14px; }
+.sale-buyer { font-size: 12px; color: #64748b; }
+
+.sale-meta {
+  text-align: right;
+  margin-right: 24px;
 }
 
-.low-stock-category,
-.order-supplier {
-  display: block;
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-}
+.sale-amount { font-weight: 700; color: #1e293b; font-size: 14px; }
+.sale-date { font-size: 11px; color: #94a3b8; }
 
-.low-stock-qty {
-  font-size: var(--font-size-sm);
+.badge-completed {
+  background: #dcfce7;
+  color: #16a34a;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
   font-weight: 600;
-  color: var(--color-warning);
-  background: var(--color-warning-bg);
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
 }
 
-.empty-text {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  text-align: center;
-  padding: var(--space-md);
+.input {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
 }
 
-@media (max-width: 1024px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
+.input:focus { outline: 2px solid #0ea5e9; border-color: transparent; }
+
+@media (max-width: 1200px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .stats-row { grid-template-columns: 1fr; }
+  .dashboard-tabs { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .mock-sale-form { flex-direction: column; align-items: stretch; }
 }

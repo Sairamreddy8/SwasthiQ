@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import './MedicineModal.css';
 
 export default function MedicineModal({ medicine, onClose, onSave }) {
   const isEditing = !!medicine;

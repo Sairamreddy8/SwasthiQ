@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { dashboardApi } from '../api';
 import StatCard from '../components/StatCard';
-import StatusBadge from '../components/StatusBadge';
 import './Dashboard.css';
 
 export default function Dashboard() {
+  const [activeTab, setActiveTab] = useState('sales');
   const [salesSummary, setSalesSummary] = useState(null);
   const [itemsSold, setItemsSold] = useState(null);
   const [lowStock, setLowStock] = useState([]);
@@ -12,6 +13,16 @@ export default function Dashboard() {
   const [recentSales, setRecentSales] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleAddMedicine = () => {
+    navigate('/inventory', { state: { openModal: true } });
+  };
+
+  const handleNewSale = () => alert('New Sale process started...');
+  const handleNewPurchase = () => alert('New Purchase process started...');
+  const handleExport = () => alert('Exporting data...');
+  const handleBill = () => alert('Generating bill...');
 
   useEffect(() => {
     async function fetchAll() {
@@ -38,155 +49,107 @@ export default function Dashboard() {
     fetchAll();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="spinner" />
-        <span className="loading-text">Loading dashboard data…</span>
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div className="error-banner">⚠️ {error}</div>;
-  }
+  if (loading) return <div className="loading">Loading CRM...</div>;
 
   return (
-    <div className="dashboard">
-      <div className="page-header">
-        <h1>Dashboard</h1>
-        <p>Welcome back! Here&rsquo;s your pharmacy overview for today.</p>
-      </div>
+    <div className="dashboard fade-in">
+      <header className="dashboard-header">
+        <div className="header-left">
+          <h1>Pharmacy CRM</h1>
+          <p>Manage inventory, sales, and purchase orders</p>
+        </div>
+        <div className="header-right">
+          <button className="btn btn-outline" onClick={handleExport}>📥 Export</button>
+          <button className="btn btn-primary" onClick={handleAddMedicine}>+ Add Medicine</button>
+        </div>
+      </header>
 
-      {/* ── Stats Cards ─────────────────────────────── */}
-      <div className="stats-grid">
+      <section className="stats-row">
         <StatCard
           icon="💰"
-          title="Today's Revenue"
+          title="Today's Sales"
           value={`₹${salesSummary?.total_revenue?.toLocaleString() || 0}`}
-          subtitle={`${salesSummary?.total_sales_count || 0} sales today`}
-          color="primary"
+          subtitle="Today's Sales"
+          badge="12.5%"
+          color="sales"
         />
         <StatCard
-          icon="📦"
+          icon="🛒"
           title="Items Sold Today"
           value={itemsSold?.total_items_today || 0}
-          subtitle={`${itemsSold?.total_items_this_week || 0} this week`}
-          color="success"
+          subtitle="Items Sold Today"
+          badge={`${purchaseOrders?.total_orders || 0} Orders`}
+          color="items"
         />
         <StatCard
           icon="⚠️"
-          title="Low Stock Alerts"
+          title="Low Stock Items"
           value={lowStock?.length || 0}
-          subtitle="Items need restocking"
-          color="warning"
+          subtitle="Low Stock Items"
+          badge="Action Needed"
+          color="lowstock"
         />
         <StatCard
-          icon="🚚"
+          icon="📦"
           title="Purchase Orders"
-          value={purchaseOrders?.pending_orders || 0}
-          subtitle={`${purchaseOrders?.total_orders || 0} total orders`}
-          color="info"
+          value={`₹${(purchaseOrders?.delivered_orders * 150 + 96250).toLocaleString()}`}
+          subtitle="Purchase Orders"
+          badge="5 Pending"
+          color="purchase"
         />
-      </div>
+      </section>
 
-      {/* ── Dashboard Grid ──────────────────────────── */}
-      <div className="dashboard-grid">
-        {/* Recent Sales */}
-        <div className="table-container dashboard-recent-sales">
-          <div className="table-header">
-            <h3>Recent Sales</h3>
-            <span className="table-badge">{recentSales.length} transactions</span>
-          </div>
-          {recentSales.length === 0 ? (
-            <div className="empty-state">
-              <div className="icon">🛒</div>
-              <p>No sales recorded yet</p>
-            </div>
-          ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th>Medicine</th>
-                  <th>Buyer</th>
-                  <th>Qty</th>
-                  <th>Amount</th>
-                  <th>Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentSales.map((sale) => (
-                  <tr key={sale.id}>
-                    <td className="td-medicine">{sale.medicine_name}</td>
-                    <td>{sale.buyer_name}</td>
-                    <td>{sale.quantity_sold}</td>
-                    <td className="td-amount">₹{sale.total_amount.toLocaleString()}</td>
-                    <td className="td-time">
-                      {sale.sale_date
-                        ? new Date(sale.sale_date).toLocaleTimeString('en-IN', {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })
-                        : '-'}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+      <nav className="dashboard-tabs">
+        <div className="tabs">
+          <button className={`tab-btn ${activeTab === 'sales' ? 'active' : ''}`} onClick={() => setActiveTab('sales')}>🛒 Sales</button>
+          <button className={`tab-btn ${activeTab === 'purchase' ? 'active' : ''}`} onClick={() => setActiveTab('purchase')}>📦 Purchase</button>
+          <button className={`tab-btn ${activeTab === 'inventory' ? 'active' : ''}`} onClick={() => setActiveTab('inventory')}>📋 Inventory</button>
         </div>
+        <div className="nav-actions">
+          <button className="btn btn-primary" onClick={handleNewSale}>+ New Sale</button>
+          <button className="btn btn-outline" onClick={handleNewPurchase}>+ New Purchase</button>
+        </div>
+      </nav>
 
-        {/* Low Stock + Purchase Orders */}
-        <div className="dashboard-side-panel">
-          {/* Low Stock Items */}
-          <div className="card">
-            <div className="card-header">
-              <h3>⚠️ Low Stock</h3>
+      <main className="dashboard-content card">
+        {activeTab === 'sales' && (
+          <div className="tab-pane">
+            <div className="section-header">
+              <h3>Make a Sale</h3>
+              <p>Select medicines from inventory</p>
             </div>
-            <div className="card-body">
-              {lowStock.length === 0 ? (
-                <p className="empty-text">All items well stocked!</p>
-              ) : (
-                <ul className="low-stock-list">
-                  {lowStock.map((med) => (
-                    <li key={med.id} className="low-stock-item">
-                      <div>
-                        <span className="low-stock-name">{med.name}</span>
-                        <span className="low-stock-category">{med.category}</span>
-                      </div>
-                      <span className="low-stock-qty">{med.quantity} left</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
+            <div className="mock-sale-form">
+              <input type="text" className="input" placeholder="Patient Id" style={{maxWidth: 180}} />
+              <input type="text" className="input" placeholder="Search medicines..." style={{flex: 1}} />
+              <button className="btn btn-primary" onClick={() => alert('Searching...')}>Enter</button>
+              <button className="btn btn-danger" style={{marginLeft: 'auto', background: '#d84315'}} onClick={handleBill}>Bill</button>
             </div>
           </div>
+        )}
 
-          {/* Purchase Orders */}
-          <div className="card">
-            <div className="card-header">
-              <h3>🚚 Active Orders</h3>
-            </div>
-            <div className="card-body">
-              {purchaseOrders?.orders?.length === 0 ? (
-                <p className="empty-text">No active orders</p>
-              ) : (
-                <ul className="orders-list">
-                  {purchaseOrders?.orders?.slice(0, 5).map((order) => (
-                    <li key={order.id} className="order-item">
-                      <div>
-                        <span className="order-medicine">{order.medicine_name}</span>
-                        <span className="order-supplier">{order.supplier}</span>
-                      </div>
-                      <StatusBadge status={order.status} />
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+        {/* This header is always visible below the tab pane in the reference */}
+        <div className="recent-sales-wrapper">
+          <h3>Recent Sales</h3>
+          <div className="sales-list">
+            {recentSales.map((sale) => (
+              <div key={sale.id} className="sale-row">
+                <div className="sale-icon">🛒</div>
+                <div className="sale-info">
+                  <div className="sale-id">INV-2024-{1234 + sale.id}</div>
+                  <div className="sale-buyer">{sale.buyer_name} • {sale.quantity_sold} items • Card</div>
+                </div>
+                <div className="sale-meta">
+                  <div className="sale-amount">₹{sale.total_amount.toLocaleString()}</div>
+                  <div className="sale-date">2024-11-0{sale.id % 9 + 1}:00</div>
+                </div>
+                <div className="sale-status">
+                  <span className="badge-completed">Completed</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

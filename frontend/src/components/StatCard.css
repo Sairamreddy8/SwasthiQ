@@ -1,92 +1,69 @@
 .stat-card {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 24px;
   border: 1px solid var(--color-border-light);
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-base);
-  position: relative;
-  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-}
-
-.stat-card--primary::before { background: linear-gradient(90deg, #4f46e5, #818cf8); }
-.stat-card--success::before { background: linear-gradient(90deg, #10b981, #34d399); }
-.stat-card--warning::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
-.stat-card--danger::before { background: linear-gradient(90deg, #ef4444, #f87171); }
-.stat-card--info::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
 
 .stat-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
 }
 
 .stat-card__header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-md);
+  align-items: flex-start;
 }
 
 .stat-card__icon {
   width: 44px;
   height: 44px;
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: 20px;
 }
 
-.stat-card__icon--primary { background: var(--color-primary-50); }
-.stat-card__icon--success { background: var(--color-success-bg); }
-.stat-card__icon--warning { background: var(--color-warning-bg); }
-.stat-card__icon--danger { background: var(--color-danger-bg); }
-.stat-card__icon--info { background: var(--color-info-bg); }
+.stat-card__icon--sales { background: #dcfce7; color: #10b981; }
+.stat-card__icon--items { background: #e0f2fe; color: #0ea5e9; }
+.stat-card__icon--lowstock { background: #fef3c7; color: #f59e0b; }
+.stat-card__icon--purchase { background: #f3e8ff; color: #a855f7; }
 
-.stat-card__trend {
-  font-size: var(--font-size-xs);
+.stat-card__badge {
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
 }
 
-.stat-card__trend.up {
-  background: var(--color-success-bg);
-  color: var(--color-success);
-}
-
-.stat-card__trend.down {
-  background: var(--color-danger-bg);
-  color: var(--color-danger);
-}
+.stat-card__badge--sales { background: #f0fdf4; color: #16a34a; }
+.stat-card__badge--items { background: #e0f2fe; color: #0284c7; }
+.stat-card__badge--lowstock { background: #fffbeb; color: #d97706; }
+.stat-card__badge--purchase { background: #fdf4ff; color: #9333ea; }
 
 .stat-card__value {
-  font-size: var(--font-size-2xl);
+  font-size: 28px;
   font-weight: 700;
-  color: var(--color-text);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  color: #1e293b;
+  line-height: 1;
 }
 
 .stat-card__title {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  margin-top: var(--space-xs);
+  font-size: 14px;
   font-weight: 500;
+  color: #64748b;
+  margin-top: 4px;
 }
 
 .stat-card__subtitle {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
+  font-size: 12px;
+  color: #94a3b8;
   margin-top: 2px;
 }
