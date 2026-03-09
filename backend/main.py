@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base
 from routers.dashboard import router as dashboard_router
 from routers.inventory import router as inventory_router
+from routers.sales import router as sales_router
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -33,6 +34,7 @@ app.add_middleware(
 
 app.include_router(dashboard_router)
 app.include_router(inventory_router)
+app.include_router(sales_router)
 
 
 @app.get("/")

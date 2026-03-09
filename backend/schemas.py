@@ -43,6 +43,12 @@ class StatusUpdate(BaseModel):
 
 # ─── Sale Schemas ───────────────────────────────────────────
 
+class SaleCreate(BaseModel):
+    medicine_id: int
+    quantity_sold: int = Field(..., gt=0)
+    buyer_name: str = Field(..., min_length=1, max_length=200)
+
+
 class SaleResponse(BaseModel):
     id: int
     medicine_id: int

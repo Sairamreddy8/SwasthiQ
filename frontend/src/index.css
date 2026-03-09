@@ -209,3 +209,21 @@ td {
 .fade-in {
   animation: fadeIn 0.3s ease-in-out;
 }
+
+/* ── Search Dropdown ─────────────────────────────────────── */
+.search-dropdown {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-top: 4px;
+  box-shadow: var(--shadow-lg);
+}
+
+.dropdown-item:hover {
+  background-color: var(--color-bg);
+}
+
+.dropdown-item small {
+  color: var(--color-text-muted);
+  float: right;
+}

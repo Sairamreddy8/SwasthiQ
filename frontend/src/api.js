@@ -1,5 +1,6 @@
 // Use the environment variable for production (e.g., in Vercel)
-const BASE_URL = import.meta.env.VITE_SwasthiQ_backend || 'https://localhost:8000';
+const BASE_URL = 'http://localhost:8000';
+// import.meta.env.VITE_SwasthiQ_backend ||
 
 async function request(endpoint, options = {}) {
   // console.log(BASE_URL);
@@ -51,4 +52,11 @@ export const inventoryApi = {
       method: 'PATCH',
       body: JSON.stringify({ status }),
     }),
+};
+
+// ─── Sales APIs ────────────────────────────────────────────
+export const salesApi = {
+  listSales: () => request('/sales'),
+  createSale: (data) =>
+    request('/sales', { method: 'POST', body: JSON.stringify(data) }),
 };
