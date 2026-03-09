@@ -1,6 +1,6 @@
 // Use the environment variable for production (e.g., in Vercel)
-const BASE_URL = 'http://localhost:8000';
-// import.meta.env.VITE_SwasthiQ_backend ||
+const BASE_URL = import.meta.env.VITE_SwasthiQ_backend || 'http://localhost:8000';
+// 
 
 async function request(endpoint, options = {}) {
   // console.log(BASE_URL);
