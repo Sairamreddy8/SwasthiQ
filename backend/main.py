@@ -14,9 +14,17 @@ app = FastAPI(
 )
 
 # CORS — allow React dev server
+# CORS configuration
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    # Add your production frontend URL here when deployed
+    # "*.railway.app", 
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=["*"],  # For production, you might want to restrict this to 'origins'
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
